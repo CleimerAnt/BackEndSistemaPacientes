@@ -47,21 +47,6 @@ class UserRepository{
             }
         }
     }
-    
-    async FindById(id){
-        const user = await prisma.users.findFirst({
-            where:{
-                Id:id
-            }
-        })
-        return  {
-            Name:user.Name,
-            Email:user.Email,
-            UserName:user.UserName,
-            LastName:user.LastName,
-            Rol:user.Rol
-        }
-    }
 }
 
 export default new UserRepository();
