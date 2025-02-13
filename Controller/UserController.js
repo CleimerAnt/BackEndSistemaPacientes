@@ -1,5 +1,6 @@
 import UserRepository from "../Repository/UserRepository.js";
 import UserValidations from "../Validations/UserValidations.js";
+import JWT from 'jsonwebtoken'
 
 class UserController{
     constructor(){}
@@ -28,6 +29,14 @@ class UserController{
             if(loginUser === null){
                 return res.status(404).send({msg:'User not found'})
             }
+            const token = JWT.sign(loginUser, process.env.SECRET_JWTKEY, {
+                expiresIn: '1h'
+            })
+            res.cookie('accesToken', token, {
+                httpOnly: true,
+                sameSite: 'strict',
+                maxAge: 1000 * 60 * 60
+            })
             res.status(200).send(loginUser)
         }catch(err){
             res.status(500).send(err.message)
