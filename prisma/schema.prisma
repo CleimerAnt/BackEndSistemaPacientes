@@ -22,4 +22,62 @@ model Users {
     UserName String @unique
     Password String 
     Rol String
+    Patients Patients?
+    Doctors Doctors?
+}
+
+model Patients {
+  Id String @id @unique
+  BirthDate DateTime
+  Gender String
+  PhoneNumber String
+  Addres String
+  UserId String @unique
+  User Users @relation(fields: [UserId], references: [Id])
+  ClinicHistory ClinicHistory []
+  MedicalAppointmentsId String
+  MedicalAppointments MedicalAppointments @relation(fields: [MedicalAppointmentsId], references: [Id])
+  MedicalPrescriptionsId String
+  MedicalPrescriptions MedicalPrescriptions @relation(fields: [MedicalPrescriptionsId], references: [Id])
+}
+
+model ClinicHistory {
+  Id String @id @unique
+  PreviousIllnesses String?
+  Allergies String?
+  CurrentTreatments String?
+  DateOfLastConsultation DateTime?
+  PatientId String
+  Patients Patients @relation(fields: [PatientId], references: [Id])
+}
+
+model Doctors {
+  Id String @id @unique
+  Speciality String 
+  PhoneNumber String
+  Disponibility Boolean
+  UserId String @unique
+  Users Users @relation(fields: [UserId], references: [Id])
+  MedicalAppointmentsId String
+  MedicalAppointments MedicalAppointments @relation(fields: [MedicalAppointmentsId], references: [Id])
+  MedicalPrescriptionsId String
+  MedicalPrescriptions MedicalPrescriptions @relation(fields: [MedicalPrescriptionsId], references: [Id])
+}
+
+model MedicalAppointments {
+  Id String @id @unique
+  DateTime DateTime
+  ReasonToConsulted String
+  State String
+  Patients Patients[]
+  Doctor Doctors[]
+}
+
+model MedicalPrescriptions {
+  Id String @id @unique
+  Date DateTime
+  Medication String
+  Indications String
+  Patients Patients[]
+  Doctor Doctors[]
 }

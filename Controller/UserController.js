@@ -1,3 +1,4 @@
+import cookieParser from "cookie-parser";
 import UserRepository from "../Repository/UserRepository.js";
 import UserValidations from "../Validations/UserValidations.js";
 import JWT from 'jsonwebtoken'
@@ -32,9 +33,10 @@ class UserController{
             const token = JWT.sign(loginUser, process.env.SECRET_JWTKEY, {
                 expiresIn: '1h'
             })
-            res.cookie('accesToken', token, {
-                httpOnly: true,
-                sameSite: 'strict',
+            res.cookie('accessToken', token, {
+                httpOnly:true,
+                sameSite: 'Lax',
+                secure:false,
                 maxAge: 1000 * 60 * 60
             })
             res.status(200).send(loginUser)
