@@ -1,12 +1,14 @@
 import { PrismaClient } from "@prisma/client";
+import { error } from "console";
 import {randomUUID} from 'crypto'
 const prisma = new PrismaClient()
 
 class PatientsRepository{
-    constructor() {}
+    constructor() {} 
 
-    async Add(Patient){
+    async Add(Patient = []){
         Patient.Id = randomUUID()
+
         const newPatient = await prisma.patients.create({
             data: {
                 ...Patient
