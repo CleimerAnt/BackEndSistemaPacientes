@@ -1,6 +1,6 @@
 import UserRepository from "../Repository/UserRepository.js";
 import UserValidations from "../Validations/UserValidations.js";
-import JWT from 'jsonwebtoken'
+import JwtManagement from "../Helpers/JwtManagement.js";
 
 class UserController{
     constructor(){}
@@ -9,6 +9,10 @@ class UserController{
         const user = req.body;
         try{
             const validation = await UserValidations.AddValidation(user)
+            const modelValidation = await UserValidations.ModelValidation(user)
+            if(!modelValidation){
+                return res.status(400).send({msg:"The model is not completed"})
+            }
             if(validation){
                 return  res.status(400).json({msg:validation})
             }
@@ -29,9 +33,7 @@ class UserController{
             if(loginUser === null){
                 return res.status(404).send({msg:'User not found'})
             }
-            const token = JWT.sign(loginUser, process.env.SECRET_JWTKEY, {
-                expiresIn: '1h'
-            })
+            const token = JwtManagement.Create(loginUser)
             res.cookie('accessToken', token, {
                 httpOnly:true,
                 sameSite: 'Lax',

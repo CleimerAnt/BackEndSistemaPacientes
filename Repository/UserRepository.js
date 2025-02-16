@@ -47,6 +47,26 @@ class UserRepository{
             }
         }
     }
+    
+    async findUserById(id){
+        const user = await prisma.users.findFirst({
+            where:{
+                Id:id
+            }
+        })
+
+        if(user === null){
+            throw new Error('The user is not added')
+        }
+        
+        return {
+            'Id':user.Id,
+            'Name': user.Name,
+            'LastName':user.LastName,
+            'Email':user.Email,
+            'Rol':user.Rol
+        }
+    }
 }
 
 export default new UserRepository();

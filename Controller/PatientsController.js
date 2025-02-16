@@ -1,9 +1,9 @@
 import PatientsRepository from "../Repository/PatientsRepository.js";
 import PatientValidation from "../Validations/PatientValidation.js";
-import JWT from 'jsonwebtoken'
 
 class PatientsController{
-    constructor(){}
+    constructor(){
+    }
 
     async Register(req, res){
         try{
@@ -12,14 +12,9 @@ class PatientsController{
             if(!modelvalidation){
                 return res.status(400).send({msg:"The model is not completed"})
             }
-            const userValidation = await PatientValidation.UserAddedValidation(patient.UserId)
-            if(userValidation){
+            const userValidation = await PatientValidation.AddedValidation(patient)
+            if(userValidation === true){
                 return res.status(400).send({msg:'The patiend is added'})
-            }
-            const token = req.cookies.accessToken
-            const data = JWT.verify(token, process.env.SECRET_JWTKEY)
-            if(data === null){
-                return res.status(400)
             }
             const newPatient = await PatientsRepository.Add(patient)
             res.status(201).send(newPatient)
@@ -27,6 +22,63 @@ class PatientsController{
             res.status(500).send({msg: e.message})
         }
     }
+
+    async GetAll(req,res){
+        try{
+            const patients = await PatientsRepository.GetAllPatients()
+            console.log(patients.length)
+            if(patients.length === 0){
+                return res.status(204).json({msg:'No content'})
+            }
+            res.status(200).send({data:patients})
+        }catch(e){
+            res.status(500).send({msg:e.message})
+        }
+    }
+
+    async GetById(req,res){
+        try{
+            const {Id} = req.params;
+            const patiend = await PatientsRepository.FindPatientById(Id)
+            if(patiend === null) return res.status(204).send({msg:'No content'})
+            res.status(200).send({data:patiend})
+        }catch(e){
+            return res.status(500).send({msg: e.message})
+        }
+    }
+
+    async PutPatient(req,res){
+        try{
+            const patient = req.body;
+            const {Id} = req.params
+            const modelvalidation = PatientValidation.ModelEditValidation(patient)
+            if(!modelvalidation){
+                return res.status(400).send({msg:"The model is not completed"})
+            }
+            const editPatient = await PatientsRepository.EditPatient(Id, patient)
+            if(editPatient === null){
+                return res.status(404).send({msg:'The patient is not added'})
+            }
+            console.log(editPatient);
+            res.status(200).send({data: editPatient})
+        }catch(e){
+            return res.status(500).send({msg: e.message})
+        }
+    }
+
+    async DeletePatient(req,res){
+        try{
+            const {Id} = req.params
+            const DeletePatient = await PatientsRepository.DeletePatient(Id)
+            if(DeletePatient === null){
+                return res.status(404).send({msg:'The patient is not added'})
+            }
+            return res.status(200).send({msg:'Patient Deleted'})
+        }catch(e){
+            return res.status(500).send({msg: e.message})
+        }
+    }
+
 }
 
 export default new PatientsController()

@@ -27,6 +27,11 @@ class UserValidations{
         }
         return null
     }
+
+    async ModelValidation(User){
+        const verify = "Name" in User && "LastName" in User && "Email" in User && "Password" in User && "Rol" in User
+        return verify
+    }
 }
 
 export default new UserValidations();

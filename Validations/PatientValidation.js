@@ -1,27 +1,29 @@
-import {PrismaClient} from '@prisma/client'
+import PatientsRepository from '../Repository/PatientsRepository.js';
 
 class PatientValidation{
     constructor() {}
 
     ModelValidation(Patient){
-        const verify = "Gender" in Patient && "BirthDate" in Patient && "PhoneNumber" in Patient && "Addres" in Patient && "UserId" in Patient  && "MedicalAppointmentsId" in Patient && "MedicalPrescriptionsId" in Patient
+        const verify = "Gender" in Patient && "BirthDate" in Patient && "PhoneNumber" in Patient && "Addres" in Patient && "UserId" in Patient  
 
         return verify
     }
 
-    async UserAddedValidation(UserId){
-        const prisma = new PrismaClient();
-        const user = await prisma.users.findFirst({
-            where:{
-                Id: UserId
+    async AddedValidation(Patient){
+            const patient = await PatientsRepository.FindPatientByUserId(Patient.UserId)
+            if(patient !== null){
+                return true
+            }else{
+                return false
             }
-        })
-        if(user !== null){
-            return true
-        }else{
-            return false
         }
-    }
+
+    ModelEditValidation(Patient){
+            const verify = "Gender" in Patient && "BirthDate" in Patient && "PhoneNumber" in Patient && "Addres" in Patient  
+    
+            return verify
+        }
 }
+
 
 export default new PatientValidation();

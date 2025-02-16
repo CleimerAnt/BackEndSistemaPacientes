@@ -35,10 +35,8 @@ model Patients {
   UserId String @unique
   User Users @relation(fields: [UserId], references: [Id])
   ClinicHistory ClinicHistory []
-  MedicalAppointmentsId String
-  MedicalAppointments MedicalAppointments @relation(fields: [MedicalAppointmentsId], references: [Id])
-  MedicalPrescriptionsId String
-  MedicalPrescriptions MedicalPrescriptions @relation(fields: [MedicalPrescriptionsId], references: [Id])
+  MedicalPrescriptions MedicalPrescriptions []
+  MedicalAppointments MedicalAppointments []
 }
 
 model ClinicHistory {
@@ -58,10 +56,8 @@ model Doctors {
   Disponibility Boolean
   UserId String @unique
   Users Users @relation(fields: [UserId], references: [Id])
-  MedicalAppointmentsId String
-  MedicalAppointments MedicalAppointments @relation(fields: [MedicalAppointmentsId], references: [Id])
-  MedicalPrescriptionsId String
-  MedicalPrescriptions MedicalPrescriptions @relation(fields: [MedicalPrescriptionsId], references: [Id])
+  MedicalAppointments MedicalAppointments []
+  MedicalPrescriptions MedicalPrescriptions [] 
 }
 
 model MedicalAppointments {
@@ -69,8 +65,10 @@ model MedicalAppointments {
   DateTime DateTime
   ReasonToConsulted String
   State String
-  Patients Patients[]
-  Doctor Doctors[]
+  PatientsId String 
+  Patient Patients @relation(fields: [PatientsId], references: [Id])
+  DoctorId String
+  Doctor Doctors @relation(fields: [DoctorId], references: [Id])
 }
 
 model MedicalPrescriptions {
@@ -78,6 +76,8 @@ model MedicalPrescriptions {
   Date DateTime
   Medication String
   Indications String
-  Patients Patients[]
-  Doctor Doctors[]
+  PatientId String
+  Patient Patients @relation(fields: [PatientId], references: [Id])
+  DoctorId String
+  Doctor Doctors @relation(fields: [DoctorId], references: [Id])
 }
