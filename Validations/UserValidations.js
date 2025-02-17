@@ -29,8 +29,16 @@ class UserValidations{
     }
 
     async ModelValidation(User){
-        const verify = "Name" in User && "LastName" in User && "Email" in User && "Password" in User && "Rol" in User
-        return verify
+        const fields = ['Name', 'LastName', 'Email', 'Password', 'Rol'];
+        const validation = {
+            state: false,
+            message:''
+        }
+
+        fields.forEach(field => {
+            if(field in User === false) return validation.state = true, validation.message = `The model is not completed the ${field} is missing`
+        })
+        return validation
     }
 }
 

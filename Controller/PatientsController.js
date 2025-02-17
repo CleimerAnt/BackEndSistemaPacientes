@@ -9,8 +9,9 @@ class PatientsController{
         try{
             const patient = req.body;
             const modelvalidation = PatientValidation.ModelValidation(patient)
-            if(!modelvalidation){
-                return res.status(400).send({msg:"The model is not completed"})
+            console.log(modelvalidation)
+            if(modelvalidation.state === true){
+                return res.status(400).send({msg:modelvalidation.message})
             }
             const userValidation = await PatientValidation.AddedValidation(patient)
             if(userValidation === true){
@@ -52,8 +53,8 @@ class PatientsController{
             const patient = req.body;
             const {Id} = req.params
             const modelvalidation = PatientValidation.ModelEditValidation(patient)
-            if(!modelvalidation){
-                return res.status(400).send({msg:"The model is not completed"})
+            if(modelvalidation.state === true){
+                return res.status(400).send({msg:modelvalidation.message})
             }
             const editPatient = await PatientsRepository.EditPatient(Id, patient)
             if(editPatient === null){

@@ -10,8 +10,8 @@ class UserController{
         try{
             const validation = await UserValidations.AddValidation(user)
             const modelValidation = await UserValidations.ModelValidation(user)
-            if(!modelValidation){
-                return res.status(400).send({msg:"The model is not completed"})
+            if(modelValidation.state === true){
+                return res.status(400).send({msg:modelValidation.message})
             }
             if(validation){
                 return  res.status(400).json({msg:validation})

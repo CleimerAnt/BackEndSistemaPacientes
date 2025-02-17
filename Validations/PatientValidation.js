@@ -4,9 +4,17 @@ class PatientValidation{
     constructor() {}
 
     ModelValidation(Patient){
-        const verify = "Gender" in Patient && "BirthDate" in Patient && "PhoneNumber" in Patient && "Addres" in Patient && "UserId" in Patient  
-
-        return verify
+        const fields = ['Gender', 'BirthDate', 'PhoneNumber', 'Addres', 'UserId'];
+        let validation = {
+            state:false,
+            message:''
+        }
+        fields.forEach(field => {
+            if(field in Patient === false){
+                validation.state = true, validation.message = `The model is not completed the ${field} is missing`
+            }
+        })
+        return validation;
     }
 
     async AddedValidation(Patient){
@@ -19,9 +27,17 @@ class PatientValidation{
         }
 
     ModelEditValidation(Patient){
-            const verify = "Gender" in Patient && "BirthDate" in Patient && "PhoneNumber" in Patient && "Addres" in Patient  
-    
-            return verify
+            const fields = ["Gender", "BirthDate", "PhoneNumber",  "Addres"] 
+            let validation = {
+                state:false,
+                message:''
+            }
+            fields.forEach(field => {
+                if(field in Patient === false){
+                    validation.state = true, validation.message = `The model is not completed the ${field} is missing`
+                }
+            })
+            return validation;
         }
 }
 
