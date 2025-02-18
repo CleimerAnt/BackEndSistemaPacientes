@@ -9,7 +9,7 @@ class PatientsController{
         try{
             const patient = req.body;
             const modelvalidation = PatientValidation.ModelValidation(patient)
-            console.log(modelvalidation)
+            
             if(modelvalidation.state === true){
                 return res.status(400).send({msg:modelvalidation.message})
             }
@@ -59,7 +59,7 @@ class PatientsController{
             if(editPatient === null){
                 return res.status(404).send({msg:'The patient is not added'})
             }
-            console.log(editPatient);
+            
             res.status(200).send({data: editPatient})
         }catch(e){
             return res.status(500).send({msg: e.message})

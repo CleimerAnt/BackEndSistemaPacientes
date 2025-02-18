@@ -3,6 +3,7 @@ import cors from 'cors'
 import 'dotenv/config.js'
 import UserRoutes from './Routes/UserRoutes.js'
 import PatientRoutes from './Routes/PatientsRoutes.js'
+import DoctorRoutes from './Routes/DoctorRoutes.js'
 import MedicalAppointmentsRoutes from './Routes/MedicalAppointmentsRoutes.js'
 import cookieParser from 'cookie-parser';
 
@@ -25,6 +26,7 @@ app.use(cookieParser())
 app.use('/Patient', PatientRoutes)
 app.use('/User', UserRoutes)
 app.use('/MedicalAppointments', MedicalAppointmentsRoutes)
+app.use('/Doctor', DoctorRoutes)
 
 app.listen(process.env.PORT, () => {
     console.log('Server up')
