@@ -27,7 +27,6 @@ class PatientsController{
     async GetAll(req,res){
         try{
             const patients = await PatientsRepository.GetAllPatients()
-            console.log(patients.length)
             if(patients.length === 0){
                 return res.status(204).json({msg:'No content'})
             }
