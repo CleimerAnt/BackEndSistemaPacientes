@@ -43,7 +43,8 @@ class UserRepository{
                 Email:findUser.Email,
                 Username:findUser.UserName,
                 LastName:findUser.LastName,
-                Rol:findUser.Rol
+                Rol:findUser.Rol,
+                Id:findUser.Id
             }
         }
     }

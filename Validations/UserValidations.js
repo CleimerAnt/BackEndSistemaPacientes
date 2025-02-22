@@ -29,7 +29,7 @@ class UserValidations{
     }
 
     async ModelValidation(User){
-        const fields = ['Name', 'LastName', 'Email', 'Password', 'Rol'];
+        const fields = ['Name', 'LastName', 'Email', 'Password', 'Rol', 'UserName'];
         const validation = {
             state: false,
             message:''
