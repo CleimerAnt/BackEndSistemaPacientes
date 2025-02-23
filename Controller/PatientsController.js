@@ -47,6 +47,17 @@ class PatientsController{
         }
     }
 
+    async GetByUserId(req,res){
+        try{
+            const {UserId} = req.params;
+            const patiend = await PatientsRepository.FindPatientByUserId(UserId)
+            if(patiend === null) return res.status(204).send({msg:'No content'})
+            res.status(200).send({data:patiend})
+        }catch(e){
+            return res.status(500).send({msg: e.message})
+        }
+    }
+
     async PutPatient(req,res){
         try{
             const patient = req.body;

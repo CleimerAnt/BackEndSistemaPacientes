@@ -12,7 +12,6 @@ class PatientsRepository{
 
     async Add(Patient = []){
         Patient.Id = randomUUID()
-
         const newPatient = await prisma.patients.create({
             data: {
                 ...Patient

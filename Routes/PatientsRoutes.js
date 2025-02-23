@@ -22,6 +22,7 @@ const authMiddleware = (req,res,next) => {
 
 router.post('/Register', authMiddleware ,patientController.Register)
 router.get('/', authMiddleware ,patientController.GetAll)
+router.get('/GetByUserId/:UserId', authMiddleware, patientController.GetByUserId)
 
 router.route('/:Id')
     .get(authMiddleware,patientController.GetById)
