@@ -10,6 +10,9 @@ const authMiddleware = (req, res, next) => {
     }
 
     const data = JWT.verify(token, process.env.SECRET_JWTKEY)
+    if(data.Rol !== 'Doctor'){
+        return res.status(401).send({msg: 'You dont have access'})
+    }
 
     if(!data){
         return;

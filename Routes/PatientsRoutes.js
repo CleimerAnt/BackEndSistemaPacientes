@@ -11,6 +11,9 @@ const authMiddleware = (req,res,next) => {
     }
 
     const data = JwtManagement.Verify(token, res);
+    if(data.Rol !== 'Patient'){
+        return res.status(401).send({msg: 'You dont have access'})
+    }
     
     if (!data) {
         return; 
