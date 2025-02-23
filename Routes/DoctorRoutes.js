@@ -25,6 +25,7 @@ const authMiddleware = (req, res, next) => {
 
 router.post('/',authMiddleware,DoctorController.Register)
 router.get('/', authMiddleware, DoctorController.GetAll)
+router.get('/getUserId/:userId', DoctorController.GetDoctorByUserId)
 
 router.route('/:Id')
     .get(authMiddleware, DoctorController.GetById)
