@@ -39,6 +39,17 @@ class MedicalAppointmentController{
         }
     }
 
+    async GetByDoctorId(req,res){
+        try{
+            const {DoctorId} = req.params;
+            const medicalAppointment = await MedicalAppointmentRepository.GetMedicalAppointmentByDoctorId(DoctorId)
+            if(medicalAppointment.length === 0) return res.status(204).send({msg: 'Not found Medical Appointments'})
+            res.status(200).send({data: medicalAppointment})
+        }catch(e){
+            return res.status(500).send({msg:e.message})
+        }
+    }
+
     async ReprogrammingMedicalAppointment(req, res){
         try{
             const {Id} = req.params;

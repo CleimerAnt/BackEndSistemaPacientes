@@ -21,9 +21,11 @@ const authMiddleware = (req, res,next) => {
 
 router.get('/', authMiddleware, MedicalAppointmentController.GetAllMedicalAppointments)
 router.get('/:PatientId/:DoctorId', authMiddleware,MedicalAppointmentController.GetByPatientAndDoctor)
+router.get('/:DoctorId', authMiddleware, MedicalAppointmentController.GetByDoctorId)
 router.post('/', authMiddleware, MedicalAppointmentController.Post)
 
 router.route('/:Id')
     .put(authMiddleware, MedicalAppointmentController.ReprogrammingMedicalAppointment)
     .delete(authMiddleware, MedicalAppointmentController.DeleteMedicalAppointment)
+
 export default router;

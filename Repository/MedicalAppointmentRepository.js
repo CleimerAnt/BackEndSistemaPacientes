@@ -42,6 +42,21 @@ class MedicalAppointmentRepository{
         return medicalAppointment;
     }
 
+    async GetMedicalAppointmentByDoctorId(DoctorId){
+        const medicalAppointment = await prisma.medicalAppointments.findMany({
+            where:{
+                DoctorId: DoctorId
+            },
+            include:{
+                Patient: true,
+                Doctor: true
+            }
+        })
+
+        return medicalAppointment;
+    }
+
+
     async ReprogrammingMedicalAppointment(Id, DateTime){
         const medicalAppointment = await prisma.medicalAppointments.update({
             where:{
