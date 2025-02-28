@@ -43,16 +43,30 @@ class MedicalAppointmentRepository{
     }
 
     async GetMedicalAppointmentByDoctorId(DoctorId){
+        const doctor = await prisma.doctors.findFirst({
+            where: {
+                UserId: DoctorId
+            }
+        });
+
         const medicalAppointment = await prisma.medicalAppointments.findMany({
             where:{
-                DoctorId: DoctorId
+                DoctorId: doctor.Id
             },
             include:{
-                Patient: true,
+                Patient:{
+                    include: {
+                        User:{
+                            omit:{
+                                Password:true,
+                                Id: true
+                            }
+                        }
+                    }
+                },
                 Doctor: true
             }
         })
-
         return medicalAppointment;
     }
 
@@ -78,6 +92,16 @@ class MedicalAppointmentRepository{
         })
 
         return medicalAppointment;
+    }
+
+    async DeleteAllMedicalAppointmentsOfPatient(patientId){
+        await prisma.medicalAppointments.deleteMany({
+            where:{
+                PatientsId: patientId
+            }
+        })
+
+        return 'Deleted';
     }
 }
 

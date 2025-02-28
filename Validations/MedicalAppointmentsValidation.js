@@ -27,6 +27,16 @@ class MedicalAppointmentsValidation{
         if(medicalAppointment)return true
         else return false
     }
+
+    async isAddedMedicalAppointmentForPatient(patientId){
+        const medicalAppointment = await prisma.medicalAppointments.findFirst({
+            where:{
+                PatientsId:patientId
+            }
+        })
+        if(medicalAppointment)return true
+        else return false
+    }
 }
 
 export default new MedicalAppointmentsValidation();

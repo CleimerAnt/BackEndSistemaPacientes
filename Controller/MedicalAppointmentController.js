@@ -78,6 +78,20 @@ class MedicalAppointmentController{
             return res.status(500).send({msg:e.message})
         }
     }
+
+    async DeleteMedicalAppointmentsForPatient(req, res){
+        try{
+            const {patientId} = req.params;
+            const addedValidation = await MedicalAppointmentsValidation.isAddedMedicalAppointmentForPatient(patientId)
+            if(addedValidation === false){
+                return res.status(204).send({msg:'Medical Appointment not found'})
+            }
+            const medicalAppointment = await MedicalAppointmentRepository.DeleteAllMedicalAppointmentsOfPatient(patientId)
+            res.status(200).send({msg: 'Deleted successfully', data: medicalAppointment})
+        }catch(e){
+            return res.status(500).send({msg:e.message})
+        }
+    }
 }
 
 export default new MedicalAppointmentController();
