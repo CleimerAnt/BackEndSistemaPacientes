@@ -32,6 +32,8 @@ model Patients {
   Gender String
   PhoneNumber String
   Addres String
+  Blood String
+  Weight Float
   UserId String @unique
   User Users @relation(fields: [UserId], references: [Id])
   ClinicHistory ClinicHistory []
