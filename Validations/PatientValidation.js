@@ -4,7 +4,7 @@ class PatientValidation{
     constructor() {}
 
     ModelValidation(Patient){
-        const fields = ['Gender', 'BirthDate', 'PhoneNumber', 'Addres', 'UserId'];
+        const fields = ['Gender', 'BirthDate', 'PhoneNumber', 'Addres', 'UserId','Blood','Weight'];
         let validation = {
             state:false,
             message:''
@@ -27,7 +27,7 @@ class PatientValidation{
         }
 
     ModelEditValidation(Patient){
-            const fields = ["Gender", "BirthDate", "PhoneNumber",  "Addres"] 
+            const fields = ['Gender', 'BirthDate', 'PhoneNumber', 'Addres','Blood','Weight'];
             let validation = {
                 state:false,
                 message:''
