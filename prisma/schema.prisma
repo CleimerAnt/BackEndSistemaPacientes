@@ -71,6 +71,7 @@ model MedicalAppointments {
   Patient Patients @relation(fields: [PatientsId], references: [Id])
   DoctorId String
   Doctor Doctors @relation(fields: [DoctorId], references: [Id])
+  MedicalPrescriptions MedicalPrescriptions []  
 }
 
 model MedicalPrescriptions {
@@ -82,4 +83,6 @@ model MedicalPrescriptions {
   Patient Patients @relation(fields: [PatientId], references: [Id])
   DoctorId String
   Doctor Doctors @relation(fields: [DoctorId], references: [Id])
+  MedicalAppointmentsId String
+  MedicalAppointments MedicalAppointments @relation(fields: [MedicalAppointmentsId],references: [Id])
 }
