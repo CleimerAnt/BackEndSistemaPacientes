@@ -76,7 +76,7 @@ class MedicalPrescriptionController{
         }
     }
 
-    async PutMedicalPrescriptions(req, res){
+    async PutMedicalPrescriptionsByPatientId(req, res){
         try{
             const {patientId} = req.params;
             const MedicalPrescription = req.body;
@@ -89,6 +89,25 @@ class MedicalPrescriptionController{
                 return res.status(204).send({msg:'Medical Prescriptions not found'})
             }
             const newMedicalPrescriptions = await MedicalPrescriptionsRepository.UpdateMedicalPrescriptions(patientId, MedicalPrescription)
+            res.status(200).send({data: newMedicalPrescriptions})
+        }catch(e){
+            return res.status(500).send({msg:e.message})
+        }
+    }
+
+    async PutMedicalPrescriptions(req, res){
+        try{
+            const {Id} = req.params;
+            const MedicalPrescription = req.body;
+            const modelValidation = MedicalPrescriptionsValidation.EditmodelValidation(MedicalPrescription)
+            if(modelValidation.state === true){
+                return res.status(400).send({msg: modelValidation.message})
+            }
+            const addedValidation = await MedicalPrescriptionsValidation.isAdded(Id)
+            if(addedValidation === false){
+                return res.status(204).send({msg:'Medical Prescriptions not found'})
+            }
+            const newMedicalPrescriptions = await MedicalPrescriptionsRepository.UpdateMedicalPrescriptions(Id, MedicalPrescription)
             res.status(200).send({data: newMedicalPrescriptions})
         }catch(e){
             return res.status(500).send({msg:e.message})
