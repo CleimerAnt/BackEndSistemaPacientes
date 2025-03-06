@@ -41,8 +41,17 @@ class MedicalPrescriptionsRepository{
         return MedicalPrescriptions;
     }
     
+    async GetMedicalPrescriptionByMedicalAppointmentId(medicalAppointmentId){
+        const medicalPrescriptions = await prisma.medicalPrescriptions.findFirst({
+            where:{
+                MedicalAppointmentsId: medicalAppointmentId
+            }
+        })
+        return medicalPrescriptions
+    }
+
     async GetMedicalPrescriptionsByPatientIdAndDoctorId(PatientId, DoctorId){
-        const MedicalPrescriptions = await prisma.medicalPrescriptions.findMany({
+        const MedicalPrescriptions = await prisma.medicalPrescriptions.findFirst({
             where:{
                 AND:[
                     {DoctorId: DoctorId},

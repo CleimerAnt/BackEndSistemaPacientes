@@ -50,6 +50,18 @@ class MedicalPrescriptionController{
         }
     }
 
+    async GetByMedicalAppointmentId(req,res){
+        try{
+            const {medicalAppointmentId} = req.params;
+            const MedicalPrescriptions = await MedicalPrescriptionsRepository.GetMedicalPrescriptionByMedicalAppointmentId(medicalAppointmentId)
+            if(MedicalPrescriptions == null) return res.status(204).send({msg: 'Not found Medical Prescriptions'})
+            if(MedicalPrescriptions.length === 0) return res.status(204).send({msg: 'Not found Medical Prescriptions'})
+            res.status(200).send({data: MedicalPrescriptions})
+        }catch(e){
+            return res.status(500).send({msg:e.message})
+        }
+    }
+
     async DeleteMedicalPrescriptions(req, res){
         try{
             const {patientId} = req.params;

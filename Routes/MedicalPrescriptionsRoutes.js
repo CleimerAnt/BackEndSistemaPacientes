@@ -21,6 +21,7 @@ const authMiddleware = (req, res,next) => {
 
 router.post('/',authMiddleware, MedicalPrescriptionsController.Post)
 router.get('/getByPatientAndDoctor/:patientId/:doctorId', authMiddleware, MedicalPrescriptionsController.GetByPatientAndDoctor)
+router.get('/getByMedicalAppointmentId/:medicalAppointmentId', authMiddleware, MedicalPrescriptionsController.GetByMedicalAppointmentId)
 
 router.route('/:patientId')
     .get(authMiddleware, MedicalPrescriptionsController.GetMedicalPrescriptionByPatientId)
