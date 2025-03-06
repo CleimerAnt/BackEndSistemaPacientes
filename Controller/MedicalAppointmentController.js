@@ -65,6 +65,21 @@ class MedicalAppointmentController{
         }
     }
 
+    async ChangeState(req, res){
+        try{
+            const {Id} = req.params;
+            const {State} = req.body;
+            const addedValidation = await MedicalAppointmentsValidation.isAdded(Id)
+            if(addedValidation === false){
+                return res.status(204).send({msg:'Medical Appointment not found'})
+            }
+            const medicalAppointment = await MedicalAppointmentRepository.ChangeStateOfMedicalAppointment(Id, State)
+            res.status(200).send({data: medicalAppointment})
+        }catch(e){
+            return res.status(500).send({msg:e.message})
+        }
+    }
+
     async DeleteMedicalAppointment(req, res){
         try{
             const {Id} = req.params;

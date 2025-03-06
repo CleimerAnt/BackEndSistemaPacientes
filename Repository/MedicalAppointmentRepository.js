@@ -84,6 +84,20 @@ class MedicalAppointmentRepository{
         return medicalAppointment;
     }
 
+    async ChangeStateOfMedicalAppointment(Id, state){
+
+        const medicalAppointment = await prisma.medicalAppointments.update({
+            where:{
+                Id:Id
+            },
+            data:{
+                State: state
+            }
+        })
+
+        return medicalAppointment;
+    }
+
     async Delete(Id){
         const medicalAppointment = await prisma.medicalAppointments.delete({
             where:{

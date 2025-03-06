@@ -23,6 +23,7 @@ router.get('/', authMiddleware, MedicalAppointmentController.GetAllMedicalAppoin
 router.get('/:PatientId/:DoctorId', authMiddleware,MedicalAppointmentController.GetByPatientAndDoctor)
 router.get('/:DoctorId', authMiddleware, MedicalAppointmentController.GetByDoctorId)
 router.post('/', authMiddleware, MedicalAppointmentController.Post)
+router.put('/changeState/:Id', authMiddleware, MedicalAppointmentController.ChangeState)
 router.delete('/deleteAllMedicalAppointmentsForPatient/:patientId', authMiddleware, MedicalAppointmentController.DeleteMedicalAppointmentsForPatient)   
 
 router.route('/:Id')

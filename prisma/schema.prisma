@@ -66,7 +66,7 @@ model MedicalAppointments {
   Id String @id @unique
   DateTime DateTime
   ReasonToConsulted String
-  State String
+  State Boolean
   PatientsId String 
   Patient Patients @relation(fields: [PatientsId], references: [Id])
   DoctorId String
