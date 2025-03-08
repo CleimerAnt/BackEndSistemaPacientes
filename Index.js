@@ -7,6 +7,7 @@ import DoctorRoutes from './Routes/DoctorRoutes.js'
 import MedicalAppointmentsRoutes from './Routes/MedicalAppointmentsRoutes.js'
 import ClinicHistoryRoutes from './Routes/ClinicHistoryRoutes.js'
 import MedicalPrescriptionsRoutes from './Routes/MedicalPrescriptionsRoutes.js'
+import NotificationRoutes from './Routes/NotificationRoutes.js'
 import cookieParser from 'cookie-parser';
 const app = express();
 
@@ -30,6 +31,7 @@ app.use('/MedicalAppointments', MedicalAppointmentsRoutes)
 app.use('/Doctor', DoctorRoutes)
 app.use('/ClinicHistory', ClinicHistoryRoutes)
 app.use('/MedicalPrescription', MedicalPrescriptionsRoutes)
+app.use('/Notifications', NotificationRoutes)
 
 app.listen(process.env.PORT, () => {
     console.log('Server up')

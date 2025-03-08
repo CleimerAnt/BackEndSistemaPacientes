@@ -81,6 +81,18 @@ class MedicalAppointmentRepository{
         const medicalAppointment = await prisma.medicalAppointments.findMany({
             where:{
                 PatientsId: patient.Id
+            },
+            include:{
+                Patient:{
+                    include:{
+                        User:{
+                            omit:{
+                                Password:true,
+                                Id:true
+                            }
+                        }
+                    }
+                }
             }
         })
 

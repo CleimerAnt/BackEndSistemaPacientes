@@ -39,6 +39,7 @@ model Patients {
   ClinicHistory ClinicHistory []
   MedicalPrescriptions MedicalPrescriptions []
   MedicalAppointments MedicalAppointments []
+  Notifications Notifications[]
 }
 
 model ClinicHistory {
@@ -57,9 +58,11 @@ model Doctors {
   PhoneNumber String
   Disponibility Boolean
   UserId String @unique
+  NotificationId String @unique
   Users Users @relation(fields: [UserId], references: [Id])
   MedicalAppointments MedicalAppointments []
   MedicalPrescriptions MedicalPrescriptions [] 
+  Notification Notifications []
 }
 
 model MedicalAppointments {
@@ -85,4 +88,13 @@ model MedicalPrescriptions {
   Doctor Doctors @relation(fields: [DoctorId], references: [Id])
   MedicalAppointmentsId String
   MedicalAppointments MedicalAppointments @relation(fields: [MedicalAppointmentsId],references: [Id])
+}
+
+model Notifications {
+  Id String @id @unique
+  Message String
+  PatientId String
+  DoctorId String
+  Patients Patients[]
+  Doctors Doctors[]
 }
