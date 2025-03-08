@@ -9,6 +9,10 @@ class NotificationsController{
     async CreateNotification(req, res){
         try{
             const notification = req.body
+            const modelValidation = NotificationValidation.modelValidation(notification)
+            if(modelValidation.state === true){
+                return res.status(400).send({msg:modelValidation.message})
+            }
             const newNotification = await NotificationRepository.Add(notification)
             return res.status(200).send(newNotification)
         }catch(e){

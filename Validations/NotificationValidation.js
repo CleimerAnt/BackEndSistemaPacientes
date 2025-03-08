@@ -1,11 +1,24 @@
 import {PrismaClient} from '@prisma/client'
 import PatientsRepository from '../Repository/PatientsRepository.js'
 import DoctorRepository from '../Repository/DoctorRepository.js'
-const prisma = new PrismaClient()
 
 class NotificationValidations{
     constructor(){
 
+    }
+
+    modelValidation(notification){
+        const fields = ['Message', 'DoctorId', 'PatientId',]
+        const validation = {
+            state: false,
+            message: ''
+        }
+        fields.forEach(field => {
+            if(field in notification === false) return validation.state = true,
+            validation.message = `The model is not completed ${field} is missing`
+        })
+
+        return validation
     }
 
     async validatePatientHasNotification(userId){
