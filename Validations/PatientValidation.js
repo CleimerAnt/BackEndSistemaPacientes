@@ -24,7 +24,7 @@ class PatientValidation{
             }else{
                 return false
             }
-        }
+    }
 
     ModelEditValidation(Patient){
             const fields = ['Gender', 'BirthDate', 'PhoneNumber', 'Addres','Blood','Weight'];

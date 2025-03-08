@@ -21,6 +21,8 @@ const authMiddleware = (req,res, next) => {
     next()
 }
 
+router.get('/getByPatientId/:patientId', authMiddleware, NotificationsController.GetByPatientId)
+router.get('/getByDoctorId/:doctorId', authMiddleware, NotificationsController.GetByDoctorId)
 router.post('/',authMiddleware, NotificationsController.CreateNotification)
 
 
