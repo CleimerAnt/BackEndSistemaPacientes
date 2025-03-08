@@ -8,26 +8,26 @@ const authMiddleware = (req, res,next) => {
     if(!token){
         res.status(401).send({msg:'No token provided'})
     }
-
+    try{
     const data = JWT.verify(token, process.env.SECRET_JWTKEY);
-
-    if(!data){
-        return;
-    }
-
     req.user = data
     next();
+    }catch(error){
+        return res.status(403).send({ msg: "Invalid token" });
+    }
 }
 
-router.get('/', authMiddleware, MedicalAppointmentController.GetAllMedicalAppointments)
+router.get('/getByPatientId/:patientId',MedicalAppointmentController.GetMedicalAppointmentByPatientId)
 router.get('/:PatientId/:DoctorId', authMiddleware,MedicalAppointmentController.GetByPatientAndDoctor)
 router.get('/:DoctorId', authMiddleware, MedicalAppointmentController.GetByDoctorId)
+router.get('/', authMiddleware, MedicalAppointmentController.GetAllMedicalAppointments)
 router.post('/', authMiddleware, MedicalAppointmentController.Post)
 router.put('/changeState/:Id', authMiddleware, MedicalAppointmentController.ChangeState)
 router.delete('/deleteAllMedicalAppointmentsForPatient/:patientId', authMiddleware, MedicalAppointmentController.DeleteMedicalAppointmentsForPatient)   
 
+
 router.route('/:Id')
     .put(authMiddleware, MedicalAppointmentController.ReprogrammingMedicalAppointment)
     .delete(authMiddleware, MedicalAppointmentController.DeleteMedicalAppointment)
-
+    
 export default router;

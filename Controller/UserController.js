@@ -37,7 +37,7 @@ class UserController{
             res.cookie('accessToken', token, {
                 httpOnly:true,
                 sameSite: 'Lax',
-                secure:false,
+                secure:true,
                 maxAge: 1000 * 60 * 60
             })
             res.status(200).send(loginUser)
