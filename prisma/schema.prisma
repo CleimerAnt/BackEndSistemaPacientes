@@ -58,7 +58,6 @@ model Doctors {
   PhoneNumber String
   Disponibility Boolean
   UserId String @unique
-  NotificationId String @unique
   Users Users @relation(fields: [UserId], references: [Id])
   MedicalAppointments MedicalAppointments []
   MedicalPrescriptions MedicalPrescriptions [] 

@@ -1,4 +1,5 @@
 import express from 'express'
+import NotificationsController from '../Controller/NotificationsController.js'
 import JWT from 'jsonwebtoken'
 const router = express.Router()
 
@@ -19,6 +20,8 @@ const authMiddleware = (req,res, next) => {
 
     next()
 }
+
+router.post('/',authMiddleware, NotificationsController.CreateNotification)
 
 
 export default router
